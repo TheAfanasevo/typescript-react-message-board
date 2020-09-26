@@ -12,7 +12,8 @@ const Main: FunctionComponent<{}> = () => {
       <BrowserRouter>
         <Navigation />
         <Switch>
-          {/* <Route exact path="/" component={Feed} /> */}
+          {/* <Route exact path="/home" component={Home} /> */}
+          <Route exact path="/feed" component={Feed} />
           <Route exact path="/react" component={App} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />

@@ -24,6 +24,7 @@ const GetPostData = ({ id, category }: BoardProps) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  console.log(id);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -33,8 +34,12 @@ const GetPostData = ({ id, category }: BoardProps) => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err.response);
-          setError(err.response.data);
+          try {
+            setError(err.response.data);
+          } catch(serverError) {
+            setError("Server error!");
+          }
+
           setLoading(false);
         });
     };
@@ -62,7 +67,7 @@ export const Feed: FunctionComponent<BoardProps> = ({
         {error && (
           <Message negative>
             <Message.Header>
-              You are not allowed to view this page!
+              Ooops!
             </Message.Header>
             <p>{error}</p>
           </Message>

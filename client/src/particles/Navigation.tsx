@@ -15,7 +15,12 @@ const GetBoardData = () => {
           setData(response.data);
         })
         .catch((err) => {
-          setError(err.response.data);
+          try {
+            setError(err.response.data);
+          } catch (serverError) {
+            console.log("catch", serverError);
+            setError("Server error!");
+          }
         });
     };
 
@@ -37,11 +42,18 @@ export const Navigation: FunctionComponent = () => {
 
       <Dropdown item simple text="Boards">
         <Dropdown.Menu>
-          {data && data.boards.map((item: { id: number; category: string }) => (
-            <Dropdown.Item as={Link} to={{ pathname: `/boards/${item.id}` }}>
-              {item.category}
-            </Dropdown.Item>
-          ))}
+          {error && (
+            <Message negative>
+              <Message.Header>Ooops!</Message.Header>
+              <p>{error}</p>
+            </Message>
+          )}
+          {data &&
+            data.boards.map((item: { id: number; category: string }) => (
+              <Dropdown.Item as={Link} to={{ pathname: `/boards/${item.id}` }}>
+                {item.category}
+              </Dropdown.Item>
+            ))}
           <Dropdown.Item>Add new</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
