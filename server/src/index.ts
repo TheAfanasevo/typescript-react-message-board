@@ -18,7 +18,8 @@ createConnection()
         app.use(logger());
         app.use(
             cors({
-                origin: "*",
+                origin: "http://localhost:3000",
+                credentials: true
             })
         );
 

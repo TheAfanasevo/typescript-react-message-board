@@ -5,6 +5,8 @@ export const getBoards = async (ctx: Context) => {
     try {
         const boards = await Board.find();
 
+        if (boards === []) ctx.throw(400, 'No board found!');
+
         ctx.status = 200;
         ctx.message = 'Boards found!';
         ctx.body = { boards };

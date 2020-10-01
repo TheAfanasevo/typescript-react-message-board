@@ -1,6 +1,7 @@
 import { Context } from "koa";
 import { BoardUser } from "../entity/BoardUser";
 import bcrypt from "bcrypt";
+import { SignupRequest } from "../requests/SignupRequest";
 
 export const getUsers = async (ctx: Context) => {
     const users = await BoardUser.find();
@@ -28,6 +29,8 @@ export const getOneUser = async (ctx: Context) => {
 export const createUser = async (ctx: Context) => {
     try {
         const { username, name, password, age, group, email } = ctx.request.body;
+
+        let signupValidation = new SignupRequest();
 
         const user = new BoardUser();
         user.username = username;

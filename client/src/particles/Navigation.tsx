@@ -34,17 +34,40 @@ export const Navigation: FunctionComponent = () => {
   const [active, setActive] = useState("");
   const [{ data, error }] = GetBoardData();
 
+  interface MenuItem {
+    id: number;
+    name: string;
+  }
+
+  const menuItems: MenuItem[] = [
+    {
+      id: 0,
+      name: "Home",
+    },
+    {
+      id: 1,
+      name: "Feed",
+    },
+    {
+      id: 2,
+      name: "Register",
+    },
+    {
+      id: 3,
+      name: "Login",
+    },
+  ];
+
   return (
     <Menu stackable>
       <Menu.Item>
-        <img src={logo} />
+        <img src={logo} alt="Application logo"/>
       </Menu.Item>
 
       <Dropdown item simple text="Boards">
         <Dropdown.Menu>
           {error && (
             <Message negative>
-              <Message.Header>Ooops!</Message.Header>
               <p>{error}</p>
             </Message>
           )}
@@ -58,35 +81,18 @@ export const Navigation: FunctionComponent = () => {
         </Dropdown.Menu>
       </Dropdown>
 
-      <Menu.Item
-        as={Link}
-        name="home"
-        active={active === "home"}
-        onClick={() => setActive("home")}
-        to="/"
-      >
-        Home
-      </Menu.Item>
-
-      <Menu.Item
-        as={Link}
-        name="register"
-        active={active === "register"}
-        onClick={() => setActive("register")}
-        to="/register"
-      >
-        Register
-      </Menu.Item>
-
-      <Menu.Item
-        as={Link}
-        name="sign-in"
-        active={active === "sign-in"}
-        onClick={() => setActive("sign-in")}
-        to="/login"
-      >
-        Sign-in
-      </Menu.Item>
+      {menuItems.map((item: MenuItem) => (
+        <Menu.Item
+          key={item.id}
+          as={Link}
+          name={item.name}
+          active={active === item.name}
+          onClick={() => setActive(item.name)}
+          to={item.name.toLowerCase()}
+        >
+          {item.name}
+        </Menu.Item>
+      ))}
     </Menu>
   );
 };

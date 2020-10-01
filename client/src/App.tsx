@@ -1,8 +1,9 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useContext, useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Axios from "axios";
 import { Loader, Dimmer, Message } from "semantic-ui-react";
+import { UserContext } from "./contexts/UserContext";
 
 const GetUserData = () => {
   const [data, setData] = useState({ users: [] });
@@ -19,7 +20,11 @@ const GetUserData = () => {
           setLoading(false);
         })
         .catch((err) => {
-          setError(err.response.data);
+          try {
+            setError(err.response.data);
+          } catch (serverError) {
+            setError("Server error!");
+          }
           setLoading(false);
         });
     };
@@ -32,6 +37,7 @@ const GetUserData = () => {
 
 const App: FunctionComponent<{}> = () => {
   const [{ data, loading, error }] = GetUserData();
+  const { user, setUser } = useContext(UserContext);
   return (
     <div className="App">
       <header className="App-header">
@@ -48,6 +54,9 @@ const App: FunctionComponent<{}> = () => {
           Creator
         </a>
 
+        <div>
+          {user}
+        </div>
         {error && (
           <Message negative>
             <Message.Header>

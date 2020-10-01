@@ -14,17 +14,16 @@ import {
 } from "semantic-ui-react";
 import logo from "../logo.svg";
 
-type BoardProps = {
+interface BoardProps {
   id: number;
   category: string;
-};
+}
 
 const GetPostData = ({ id, category }: BoardProps) => {
   const [data, setData] = useState({ posts: [] });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  console.log(id);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -45,7 +44,7 @@ const GetPostData = ({ id, category }: BoardProps) => {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   return [{ data, loading, error }];
 };
