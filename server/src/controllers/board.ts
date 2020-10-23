@@ -1,5 +1,6 @@
 import { Context } from "koa";
 import { Board } from "../entity/Board";
+import { BoardRepository } from "../entity/BoardRepository";
 
 export const getBoards = async (ctx: Context) => {
     try {
@@ -18,7 +19,7 @@ export const getBoards = async (ctx: Context) => {
 export const getOneBoard = async (ctx: Context) => {
     try {
         const { id } = ctx.params;
-        const board = await Board.findOne({ id });
+        const board = await new BoardRepository().getOne(id);
 
         if (!board) ctx.throw(400, 'No board found!');
 

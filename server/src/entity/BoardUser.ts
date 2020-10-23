@@ -1,10 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from "typeorm";
 import { Post } from "./Post";
+import { Group } from "../dto/Group";
 
-export enum Group {
-    ADMIN = "admin",
-    BASIC = "basic"
-}
 
 @Entity()
 export class BoardUser extends BaseEntity {
@@ -28,7 +25,7 @@ export class BoardUser extends BaseEntity {
     password: string;
 
     @Column({ type: "enum", enum: Group, default: Group.BASIC })
-    group: Group
+    group: Group;
 
     @Column({ default: 0 })
     tokenVersion: number;
